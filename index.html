@@ -1,209 +1,529 @@
-<!doctype html>
-<html lang="id">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<title>貯金・お金の詳細</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>貯金とお金の明細</title>
+
 <style>
-:root{--bg:#f3f4f6;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--dark:#111827;--green:#15803d;--red:#dc2626;--soft:#f8fafc}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif}
-body.dark{--bg:#0b0f16;--card:#151a23;--text:#f3f4f6;--muted:#9ca3af;--line:#293241;--soft:#111722}
-button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:620px;margin:auto;min-height:100vh;background:var(--card);padding-bottom:105px}
-header{background:var(--dark);color:#fff;padding:48px 18px 22px;border-radius:0 0 30px 30px}
-.head{display:flex;justify-content:space-between;align-items:center}.brand{font-size:18px;font-weight:800}.monthpick{margin-top:16px;display:flex;gap:8px;align-items:center}.monthpick select{background:#252b38;color:#fff;border:1px solid #3b4352;width:auto;margin:0;padding:9px 12px}
-.balance{font-size:39px;font-weight:900;margin-top:15px;letter-spacing:-1px}.sub{opacity:.65;font-size:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 2px 10px #00000008}.num{font-size:19px;font-weight:800;margin-top:5px}.green{color:var(--green)}.red{color:var(--red)}
-section{padding:0 15px}.title{display:flex;justify-content:space-between;align-items:center}h2{font-size:19px;margin:16px 0 10px}
-.btn{background:var(--dark);color:#fff;padding:10px 13px;border-radius:13px;font-weight:800}.btn.soft{background:var(--soft);color:var(--text);border:1px solid var(--line)}.btn.redbtn{background:#fee2e2;color:#991b1b}.btn.small{padding:7px 9px;font-size:12px}
-.chart{height:170px;border:1px solid var(--line);border-radius:20px;padding:13px;display:flex;align-items:flex-end;gap:6px}.col{flex:1;height:135px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.bars{height:110px;display:flex;align-items:flex-end;gap:3px}.bar{width:9px;border-radius:6px 6px 2px 2px;min-height:2px}.bi{background:#16a34a}.be{background:#dc2626}.xlabel{font-size:10px;color:var(--muted);margin-top:5px}
-.legend{font-size:11px;color:var(--muted);display:flex;gap:12px;margin:0 0 5px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
-.goal,.budget{border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}.row{display:flex;justify-content:space-between;gap:8px;align-items:center}.barbg{height:9px;background:#e5e7eb;border-radius:8px;overflow:hidden;margin:10px 0}.barfill{height:100%;background:#111827}.budget .barfill{background:#2563eb}.muted{font-size:12px;color:var(--muted)}
-.filters{display:flex;gap:7px;overflow:auto;margin-bottom:9px}.filters button{white-space:nowrap}.active{background:var(--dark)!important;color:#fff!important}
-.search{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);margin-bottom:9px}.item{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}.actions{display:flex;gap:5px;align-items:center}.empty{text-align:center;color:var(--muted);padding:20px}
-nav{position:fixed;z-index:8;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;gap:7px;padding:9px 8px calc(9px + env(safe-area-inset-bottom));justify-content:center}nav button{flex:1;max-width:145px;background:var(--soft);color:var(--text);padding:10px 5px;border-radius:14px;font-weight:800}
-.modal{display:none;position:fixed;z-index:20;inset:0;background:#0008;align-items:flex-end}.sheet{width:100%;max-width:620px;margin:auto;background:var(--card);color:var(--text);border-radius:25px 25px 0 0;padding:19px;max-height:90vh;overflow:auto}.sheet h2{margin-top:3px}
-input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);margin:5px 0 10px}textarea{min-height:70px;resize:vertical}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions2{display:flex;gap:9px}.actions2>*{flex:1}
-.setting{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
-.toast{position:fixed;z-index:30;bottom:85px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:12px;display:none;font-size:13px}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  background: linear-gradient(180deg, #fff1f8, #eef5ff);
+  color: #222;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px 16px 100px;
+}
+
+header {
+  padding: 15px 5px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+header p {
+  margin: 6px 0 0;
+  color: #777;
+}
+
+.anime-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: 24px;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #ff7eb3, #8ec5fc);
+  color: white;
+  box-shadow: 0 12px 30px rgba(100,100,150,.18);
+}
+
+.anime-card::after {
+  content: "★";
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  font-size: 90px;
+  opacity: .18;
+}
+
+.anime-card h2 {
+  margin: 0 0 12px;
+  font-size: 21px;
+}
+
+.balance {
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.stat {
+  background: rgba(255,255,255,.9);
+  border-radius: 20px;
+  padding: 17px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+
+.stat span {
+  display: block;
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.stat strong {
+  font-size: 19px;
+}
+
+section {
+  background: rgba(255,255,255,.92);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+section h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  margin: 6px 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  font-size: 16px;
+  background: white;
+}
+
+button {
+  border: 0;
+  border-radius: 15px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary {
+  width: 100%;
+  background: #ff6fae;
+  color: white;
+}
+
+.goal {
+  padding: 15px;
+  border-radius: 17px;
+  background: #f5f7ff;
+  margin-top: 10px;
+}
+
+.progress {
+  height: 10px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress div {
+  height: 100%;
+  background: linear-gradient(90deg,#ff6fae,#7cb8ff);
+}
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.transaction:last-child {
+  border-bottom: 0;
+}
+
+.income {
+  color: #1c9b60;
+}
+
+.expense {
+  color: #e84c73;
+}
+
+.delete {
+  background: #f1f1f1;
+  padding: 8px 11px;
+  font-size: 13px;
+}
+
+.empty {
+  color: #999;
+  text-align: center;
+  padding: 15px 0;
+}
+
+footer {
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+  margin-top: 25px;
+}
 </style>
 </head>
+
 <body>
-<div class="app">
+
+<div class="container">
+
 <header>
- <div class="head"><div class="brand">💰 貯金・お金の詳細</div><button class="btn soft" onclick="openSettings()">⚙️</button></div>
- <div class="monthpick"><span class="sub">期間</span><select id="period" onchange="render()"></select></div>
- <div class="balance" id="balance">¥0</div><div class="sub">期間の残高</div>
+  <h1>貯金とお金の明細</h1>
+  <p>毎日のお金をかんたんに管理しよう ✨</p>
 </header>
 
-<div class="grid">
- <div class="card"><div class="muted">💰 収入</div><div class="num green" id="income">¥0</div></div>
- <div class="card"><div class="muted">💸 支出</div><div class="num red" id="expense">¥0</div></div>
- <div class="card"><div class="muted">📈 取引</div><div class="num" id="txcount">0</div></div>
- <div class="card"><div class="muted">💳 平均支出</div><div class="num" id="avg">¥0</div></div>
+<div class="anime-card">
+  <h2>現在の残高</h2>
+  <div class="balance" id="balance">¥0</div>
+  <p>あなたのお金の記録</p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <span>収入</span>
+    <strong id="income">¥0</strong>
+  </div>
+
+  <div class="stat">
+    <span>支出</span>
+    <strong id="expense">¥0</strong>
+  </div>
+
+  <div class="stat">
+    <span>貯金</span>
+    <strong id="saving">¥0</strong>
+  </div>
+
+  <div class="stat">
+    <span>取引件数</span>
+    <strong id="count">0</strong>
+  </div>
 </div>
 
 <section>
- <div class="title"><h2>📊 6か月の推移</h2></div>
- <div class="card"><div class="legend"><span><i class="dot" style="background:#16a34a"></i>収入</span><span><i class="dot" style="background:#dc2626"></i>支出</span></div><div class="chart" id="chart"></div></div>
+  <h2>💰 お金を記録</h2>
+
+  <input id="title" type="text" placeholder="内容を入力">
+
+  <input id="amount" type="number" placeholder="金額（円）">
+
+  <select id="type">
+    <option value="income">収入</option>
+    <option value="expense">支出</option>
+    <option value="saving">貯金</option>
+  </select>
+
+  <button class="primary" onclick="addTransaction()">
+    記録する
+  </button>
 </section>
 
 <section>
- <div class="title"><h2>🎯 貯金目標</h2><button class="btn" onclick="openGoal()">＋</button></div>
- <div id="goals"></div>
+  <h2>🎯 貯金の目標</h2>
+
+  <input id="goalName" type="text" placeholder="目標の名前">
+
+  <input id="goalAmount" type="number" placeholder="目標金額（円）">
+
+  <button class="primary" onclick="addGoal()">
+    目標を追加
+  </button>
+
+  <div id="goals"></div>
 </section>
 
 <section>
- <div class="title"><h2>💳 カテゴリ別予算</h2><button class="btn" onclick="openBudget()">＋</button></div>
- <div id="budgets"></div>
+  <h2>📋 お金の明細</h2>
+  <div id="transactions"></div>
 </section>
 
-<section>
- <div class="title"><h2>📝 取引</h2><button class="btn" onclick="openTx()">＋</button></div>
- <input class="search" id="search" placeholder="🔎 メモ・カテゴリを検索" oninput="renderList()">
- <div class="filters">
-  <button class="btn soft active" id="fa" onclick="setFilter('all')">すべて</button>
-  <button class="btn soft" id="fi" onclick="setFilter('i')">収入</button>
-  <button class="btn soft" id="fe" onclick="setFilter('e')">支出</button>
- </div>
- <div id="list"></div>
-</section>
+<footer>
+  貯金とお金の明細
+</footer>
+
 </div>
-
-<nav><button onclick="scrollTo(0,0)">🏠 ホーム</button><button onclick="openTx()">➕ 追加</button><button onclick="openGoal()">🎯 貯金目標</button><button onclick="openTools()">🧰 データ</button></nav>
-
-<div class="modal" id="tm"><div class="sheet">
-<h2 id="txTitle">追加 取引</h2>
-<select id="type"><option value="i">💰 収入</option><option value="e">💸 支出</option></select>
-<div class="twocol"><div><label class="muted">金額（¥）</label><input id="amt" type="number" inputmode="numeric" min="1"></div><div><label class="muted">日付</label><input id="date" type="date"></div></div>
-<input id="note" placeholder="メモ（例：9月の給料）">
-<select id="cat"><option>給料</option><option>食費</option><option>家</option><option>交通費</option><option>買い物</option><option>請求・料金</option><option>娯楽</option><option>健康</option><option>その他</option></select>
-<div class="actions2"><button class="btn soft" onclick="closeM()">キャンセル</button><button class="btn" onclick="saveTx()">保存</button></div>
-</div></div>
-
-<div class="modal" id="gm"><div class="sheet">
-<h2 id="goalTitle">🎯 貯金目標 Menabung</h2>
-<input id="gn" placeholder="目標名（例：車）">
-<input id="gt" type="number" inputmode="numeric" placeholder="目標金額 ¥">
-<input id="gs" type="number" inputmode="numeric" placeholder="現在の貯金額 ¥">
-<div class="actions2"><button class="btn soft" onclick="closeM()">キャンセル</button><button class="btn" onclick="saveGoal()">保存</button></div>
-</div></div>
-
-<div class="modal" id="bm"><div class="sheet">
-<h2>💳 月間予算</h2>
-<select id="bc"><option>食費</option><option>家</option><option>交通費</option><option>買い物</option><option>請求・料金</option><option>娯楽</option><option>健康</option><option>その他</option></select>
-<input id="ba" type="number" inputmode="numeric" placeholder="予算額 ¥">
-<div class="actions2"><button class="btn soft" onclick="closeM()">キャンセル</button><button class="btn" onclick="saveBudget()">保存</button></div>
-</div></div>
-
-<div class="modal" id="sm"><div class="sheet">
-<h2>⚙️ 設定</h2>
-<div class="setting"><span>🌙 ダークモード</span><button class="btn soft" onclick="toggleDark()">Ganti</button></div>
-<div class="setting"><span>🗑️ 削除 semua data</span><button class="btn redbtn" onclick="wipe()">削除</button></div>
-<button class="btn soft" style="width:100%;margin-top:15px" onclick="closeM()">閉じる</button>
-</div></div>
-
-<div class="modal" id="dm"><div class="sheet">
-<h2>🧰 データ・バックアップ</h2>
-<p class="muted">取引・貯金目標・予算をJSONファイルに保存します。</p>
-<button class="btn" style="width:100%;margin:5px 0" onclick="exportJSON()">⬇️ JSONバックアップ</button>
-<button class="btn soft" style="width:100%;margin:5px 0" onclick="exportCSV()">📄 CSVを書き出す</button>
-<label class="btn soft" style="display:block;text-align:center;margin:5px 0">⬆️ JSON復元<input id="restore" type="file" accept=".json,application/json" onchange="importJSON(event)" style="display:none"></label>
-<button class="btn soft" style="width:100%;margin-top:8px" onclick="closeM()">閉じる</button>
-</div></div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-const KEY="kito-money-pro-v1";
-let d=JSON.parse(localStorage.getItem(KEY)||'{"t":[],"g":[],"b":[]}');
-let filter="all",edit=-1,editGoal=-1;
-const $=id=>document.getElementById(id);
-const Y=n=>"¥"+Math.round(Number(n)||0).toLocaleString("ja-JP");
-function save(){localStorage.setItem(KEY,JSON.stringify(d))}
-function today(){return new Date().toISOString().slice(0,10)}
-function ym(date){return String(date||'').slice(0,7)}
-function currentPeriod(){return $('period').value||ym(today())}
-function toast(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1800)}
-function closeM(){document.querySelectorAll('.modal').forEach(x=>x.style.display='none')}
-function openTx(i=-1){
- edit=i;$('txTitle').textContent=i<0?"追加 取引":"Edit 取引";
- if(i>=0){let x=d.t[i];$('type').value=x.type;$('amt').value=x.a;$('note').value=x.note||'';$('cat').value=x.cat||'Lainnya';$('date').value=x.date||today()}
- else{$('type').value='e';$('amt').value='';$('note').value='';$('cat').value='Makan';$('date').value=today()}
- $('tm').style.display='flex'
+
+let transactions =
+  JSON.parse(localStorage.getItem("transactions") || "[]");
+
+let goals =
+  JSON.parse(localStorage.getItem("goals") || "[]");
+
+
+function yen(number) {
+  return "¥" + Number(number).toLocaleString("ja-JP");
 }
-function saveTx(){
- let a=+$('amt').value;if(!a)return alert("金額を入力してください。");
- let x={type:$('type').value,a,note:$('note').value.trim(),cat:$('cat').value,date:$('date').value||today()};
- if(edit<0)d.t.push(x);else d.t[edit]=x;save();closeM();render();toast(edit<0?"取引 ditambahkan":"取引 diubah")
+
+
+function saveData() {
+  localStorage.setItem(
+    "transactions",
+    JSON.stringify(transactions)
+  );
+
+  localStorage.setItem(
+    "goals",
+    JSON.stringify(goals)
+  );
 }
-function delTx(i){if(confirm("削除 transaksi ini?")){d.t.splice(i,1);save();render();toast("取引 dihapus")}}
-function openGoal(i=-1){
- editGoal=i;$('goalTitle').textContent=i<0?"🎯 貯金目標 Menabung":"✏️ 目標を編集";
- if(i>=0){let x=d.g[i];$('gn').value=x.n;$('gt').value=x.t;$('gs').value=x.s}
- else{$('gn').value='';$('gt').value='';$('gs').value=''}
- $('gm').style.display='flex'
+
+
+function addTransaction() {
+
+  const title =
+    document.getElementById("title").value.trim();
+
+  const amount =
+    Number(document.getElementById("amount").value);
+
+  const type =
+    document.getElementById("type").value;
+
+  if (!title || !amount || amount <= 0) {
+    alert("内容と金額を入力してください。");
+    return;
+  }
+
+  transactions.unshift({
+    id: Date.now(),
+    title: title,
+    amount: amount,
+    type: type,
+    date: new Date().toLocaleDateString("ja-JP")
+  });
+
+  document.getElementById("title").value = "";
+  document.getElementById("amount").value = "";
+
+  saveData();
+  render();
 }
-function saveGoal(){
- let n=$('gn').value.trim(),t=+$('gt').value,s=+$('gs').value||0;
- if(!n||!t)return alert("目標名と目標金額を入力してください。");
- let x={n,t,s:Math.max(0,s)};if(editGoal<0)d.g.push(x);else d.g[editGoal]=x;save();closeM();render();toast("目標を保存しました")
+
+
+function deleteTransaction(id) {
+
+  transactions =
+    transactions.filter(item => item.id !== id);
+
+  saveData();
+  render();
 }
-function delGoal(i){if(confirm("削除 target ini?")){d.g.splice(i,1);save();render()}}
-function addGoalMoney(i){
- let n=+prompt("追加kan tabungan (¥):","0");if(!n||n<0)return;d.g[i].s+=n;save();render();toast("貯金額を追加しました")
+
+
+function addGoal() {
+
+  const name =
+    document.getElementById("goalName").value.trim();
+
+  const amount =
+    Number(document.getElementById("goalAmount").value);
+
+  if (!name || !amount || amount <= 0) {
+    alert("目標と金額を入力してください。");
+    return;
+  }
+
+  goals.push({
+    id: Date.now(),
+    name: name,
+    amount: amount
+  });
+
+  document.getElementById("goalName").value = "";
+  document.getElementById("goalAmount").value = "";
+
+  saveData();
+  render();
 }
-function openBudget(){$('bc').value='Makan';$('ba').value='';$('bm').style.display='flex'}
-function saveBudget(){
- let c=$('bc').value,a=+$('ba').value;if(!a)return alert("予算額を入力してください。");
- let old=d.b.find(x=>x.c===c);if(old)old.a=a;else d.b.push({c,a});save();closeM();render();toast("予算を保存しました")
+
+
+function deleteGoal(id) {
+
+  goals =
+    goals.filter(goal => goal.id !== id);
+
+  saveData();
+  render();
 }
-function delBudget(i){d.b.splice(i,1);save();render()}
-function setFilter(x){filter=x;renderList()}
-function initPeriods(){
- let set=new Set(d.t.map(x=>ym(x.date)));set.add(ym(today()));
- let arr=[...set].sort().reverse();$('period').innerHTML=arr.map(p=>`<option value="${p}">${new Date(p+"-02").toLocaleDateString("id-ID",{month:"long",year:"numeric"})}</option>`).join("");
+
+
+function render() {
+
+  let income = 0;
+  let expense = 0;
+  let saving = 0;
+
+  transactions.forEach(item => {
+
+    if (item.type === "income") {
+      income += item.amount;
+    }
+
+    if (item.type === "expense") {
+      expense += item.amount;
+    }
+
+    if (item.type === "saving") {
+      saving += item.amount;
+    }
+
+  });
+
+  const balance =
+    income - expense - saving;
+
+  document.getElementById("balance").textContent =
+    yen(balance);
+
+  document.getElementById("income").textContent =
+    yen(income);
+
+  document.getElementById("expense").textContent =
+    yen(expense);
+
+  document.getElementById("saving").textContent =
+    yen(saving);
+
+  document.getElementById("count").textContent =
+    transactions.length;
+
+
+  const list =
+    document.getElementById("transactions");
+
+  if (transactions.length === 0) {
+
+    list.innerHTML =
+      '<div class="empty">まだ記録がありません。</div>';
+
+  } else {
+
+    list.innerHTML =
+      transactions.map(item => {
+
+        let label = "収入";
+        let className = "income";
+        let sign = "+";
+
+        if (item.type === "expense") {
+          label = "支出";
+          className = "expense";
+          sign = "-";
+        }
+
+        if (item.type === "saving") {
+          label = "貯金";
+          className = "income";
+          sign = "-";
+        }
+
+        return `
+          <div class="transaction">
+            <div>
+              <strong>${item.title}</strong><br>
+              <small>${item.date} ・ ${label}</small>
+            </div>
+
+            <div>
+              <strong class="${className}">
+                ${sign}${yen(item.amount)}
+              </strong>
+              <br>
+              <button class="delete"
+                onclick="deleteTransaction(${item.id})">
+                削除
+              </button>
+            </div>
+          </div>
+        `;
+
+      }).join("");
+
+  }
+
+
+  const goalBox =
+    document.getElementById("goals");
+
+  if (goals.length === 0) {
+
+    goalBox.innerHTML =
+      '<div class="empty">貯金目標がありません。</div>';
+
+  } else {
+
+    goalBox.innerHTML =
+      goals.map(goal => {
+
+        const percentage =
+          Math.min(100, Math.round((saving / goal.amount) * 100));
+
+        return `
+          <div class="goal">
+
+            <strong>${goal.name}</strong>
+
+            <p>
+              ${yen(saving)} / ${yen(goal.amount)}
+            </p>
+
+            <div class="progress">
+              <div style="width:${percentage}%"></div>
+            </div>
+
+            <small>${percentage}% 達成</small>
+
+            <br><br>
+
+            <button class="delete"
+              onclick="deleteGoal(${goal.id})">
+              削除
+            </button>
+
+          </div>
+        `;
+
+      }).join("");
+
+  }
+
 }
-function render(){
- initPeriods();
- let p=currentPeriod(),arr=d.t.filter(x=>ym(x.date)===p),I=arr.filter(x=>x.type==='i').reduce((a,x)=>a+x.a,0),E=arr.filter(x=>x.type==='e').reduce((a,x)=>a+x.a,0);
- $('balance').textContent=Y(I-E);$('income').textContent=Y(I);$('expense').textContent=Y(E);$('txcount').textContent=arr.length;$('avg').textContent=Y(arr.filter(x=>x.type==='e').length?E/arr.filter(x=>x.type==='e').length:0);
- renderChart();renderGoals();renderBudgets();renderList()
-}
-function renderChart(){
- let n=new Date(currentPeriod()+"-02"),ms=[];for(let k=5;k>=0;k--){let z=new Date(n.getFullYear(),n.getMonth()-k,2);ms.push({p:ym(z.toISOString()),l:z.toLocaleDateString('id-ID',{month:'short'}),i:0,e:0})}
- d.t.forEach(x=>{let z=ms.find(m=>m.p===ym(x.date));if(z)z[x.type==='i'?'i':'e']+=x.a});
- let max=Math.max(1,...ms.flatMap(x=>[x.i,x.e]));$('chart').innerHTML=ms.map(x=>`<div class="col"><div class="bars"><div class="bar bi" style="height:${Math.max(2,x.i/max*100)}px"></div><div class="bar be" style="height:${Math.max(2,x.e/max*100)}px"></div></div><div class="xlabel">${x.l}</div></div>`).join("")
-}
-function renderGoals(){
- $('goals').innerHTML=d.g.length?d.g.map((x,i)=>{let q=Math.min(100,x.s/x.t*100||0);return `<div class="goal"><div class="row"><b>🎯 ${esc(x.n)}</b><b>${Math.round(q)}%</b></div><div class="barbg"><div class="barfill" style="width:${q}%"></div></div><div class="row"><span class="muted">${Y(x.s)} / ${Y(x.t)}</span><div class="actions"><button class="btn small soft" onclick="addGoalMoney(${i})">＋</button><button class="btn small soft" onclick="openGoal(${i})">✏️</button><button class="btn small redbtn" onclick="delGoal(${i})">🗑️</button></div></div></div>`}).join(""):'<div class="empty">貯金目標はまだありません。</div>'
-}
-function renderBudgets(){
- let p=currentPeriod();
- $('budgets').innerHTML=d.b.length?d.b.map((x,i)=>{let used=d.t.filter(z=>ym(z.date)===p&&z.type==='e'&&z.cat===x.c).reduce((a,z)=>a+z.a,0),q=Math.min(100,used/x.a*100||0);return `<div class="budget"><div class="row"><b>${esc(x.c)}</b><b>${Y(used)} / ${Y(x.a)}</b></div><div class="barbg"><div class="barfill" style="width:${q}%"></div></div><div class="row"><span class="muted">${q>=100?'⚠️ Budget terlampaui':Y(x.a-used)+' tersisa'}</span><button class="btn small redbtn" onclick="delBudget(${i})">🗑️</button></div></div>`}).join(""):'<div class="empty">予算はまだありません。</div>'
-}
-function renderList(){
- let p=currentPeriod(),q=($('search').value||'').toLowerCase(),arr=d.t.map((x,i)=>({...x,i})).filter(x=>ym(x.date)===p&&(filter==='all'||x.type===filter)&&((x.note||'').toLowerCase().includes(q)||(x.cat||'').toLowerCase().includes(q))).reverse();
- $('list').innerHTML=arr.length?arr.map(x=>`<div class="item"><div><b>${esc(x.note||x.cat)}</b><div class="muted">${esc(x.cat)} · ${x.date}</div></div><div class="actions"><b class="${x.type==='i'?'green':'red'}">${x.type==='i'?'+':'−'}${Y(x.a)}</b><button class="btn small soft" onclick="openTx(${x.i})">✏️</button><button class="btn small redbtn" onclick="delTx(${x.i})">🗑️</button></div></div>`).join(""):'<div class="empty">該当する取引はありません。</div>';
- ['fa','fi','fe'].forEach(id=>$(id).classList.remove('active'));$(filter==='all'?'fa':filter==='i'?'fi':'fe').classList.add('active')
-}
-function openSettings(){$('sm').style.display='flex'}
-function openTools(){$('dm').style.display='flex'}
-function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('kito-dark',document.body.classList.contains('dark')?'1':'0')}
-function wipe(){if(confirm("削除 SEMUA transaksi, target, dan budget?")){d={t:[],g:[],b:[]};save();render();closeM();toast("すべて data dihapus")}}
-function exportJSON(){
- let blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kito-money-backup.json';a.click();URL.revokeObjectURL(a.href);toast("バックアップを作成しました")
-}
-function importJSON(e){
- let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.t||!x.g||!x.b)throw 0;d=x;save();closeM();render();toast("バックアップを復元しました")}catch(_){alert("バックアップファイルが正しくありません。")}};r.readAsText(f)
-}
-function exportCSV(){
- let rows=[["日付","Tipe","Kategori","Catatan","Jumlah"],...d.t.map(x=>[x.date,x.type==='i'?'収入':'支出',x.cat,x.note||'',x.a])];
- let csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n"),blob=new Blob(["\ufeff"+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kito-money-transaksi.csv';a.click();URL.revokeObjectURL(a.href);toast("CSV dibuat")
-}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-if(localStorage.getItem('kito-dark')==='1')document.body.classList.add('dark');
+
+
 render();
+
 </script>
+
 </body>
 </html>
