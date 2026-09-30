@@ -2,493 +2,141 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M5 Saving Tracker</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>iPad Pro M5 Saving Tracker</title>
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
-  "Helvetica Neue",Arial,sans-serif;
-  background:#f2f2f7;
-  color:#111;
-}
-
-.app{
-  max-width:520px;
-  margin:auto;
-  min-height:100vh;
-  padding:22px 16px 40px;
-}
-
-.header{
-  background:linear-gradient(135deg,#111,#3a3a3c);
-  color:white;
-  border-radius:28px;
-  padding:26px 22px;
-  margin-bottom:16px;
-  box-shadow:0 12px 30px #0002;
-}
-
-.small{
-  font-size:13px;
-  opacity:.7
-}
-
-.title{
-  font-size:27px;
-  font-weight:800;
-  margin:6px 0
-}
-
-.subtitle{
-  opacity:.75;
-  font-size:14px
-}
-
-.card{
-  background:white;
-  border-radius:22px;
-  padding:20px;
-  margin:14px 0;
-  box-shadow:0 5px 18px #0000000d
-}
-
-.label{
-  font-size:13px;
-  color:#777;
-  margin-bottom:6px
-}
-
-.big{
-  font-size:30px;
-  font-weight:800
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center
-}
-
-.progress{
-  height:14px;
-  background:#e5e5ea;
-  border-radius:99px;
-  overflow:hidden;
-  margin:15px 0 8px
-}
-
-.bar{
-  height:100%;
-  width:0;
-  background:#111;
-  border-radius:99px;
-  transition:.4s
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
-}
-
-.stat{
-  background:#f7f7f8;
-  border-radius:16px;
-  padding:14px
-}
-
-.stat b{
-  font-size:18px;
-  display:block;
-  margin-top:4px
-}
-
-input{
-  width:100%;
-  padding:14px;
-  border:1px solid #ddd;
-  border-radius:14px;
-  font-size:16px;
-  background:#fafafa;
-  outline:none
-}
-
-button{
-  width:100%;
-  border:0;
-  border-radius:15px;
-  padding:14px;
-  font-size:16px;
-  font-weight:700;
-  background:#111;
-  color:white;
-  margin-top:10px
-}
-
-button.secondary{
-  background:#eee;
-  color:#111
-}
-
-.history{
-  margin-top:12px
-}
-
-.item{
-  display:flex;
-  justify-content:space-between;
-  padding:12px 0;
-  border-bottom:1px solid #eee;
-  font-size:14px
-}
-
-.item:last-child{
-  border-bottom:0
-}
-
-.success{
-  background:#e8f7ed;
-  color:#16743b;
-  border-radius:14px;
-  padding:13px;
-  margin-top:12px;
-  font-size:14px;
-  display:none
-}
-
-.footer{
-  text-align:center;
-  color:#999;
-  font-size:12px;
-  margin-top:22px
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;background:linear-gradient(145deg,#eef2f7,#dfe5ec);color:#111827;min-height:100vh}
+.app{max-width:620px;margin:auto;padding:28px 18px 42px}
+.hero{background:linear-gradient(135deg,#111827,#374151);color:white;border-radius:30px;padding:28px 24px;box-shadow:0 18px 45px #0002;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:180px;height:180px;border:1px solid #ffffff25;border-radius:50%;right:-55px;top:-55px;box-shadow:0 0 0 25px #ffffff08,0 0 0 50px #ffffff05}
+.kicker{font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.7}
+.hero h1{font-size:30px;margin:8px 0 4px;font-weight:800}
+.hero p{margin:0;opacity:.75}
+.card{background:#fff;border-radius:24px;margin-top:16px;padding:20px;box-shadow:0 10px 30px #0000000d}
+.label{font-size:13px;color:#6b7280;margin-bottom:7px}
+.tap-value{border:0;background:transparent;padding:0;color:#111827;font-size:25px;font-weight:800;cursor:pointer;text-align:left}
+.tap-value:active{opacity:.55}
+.progress{height:12px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin:16px 0 8px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#111827,#6b7280);border-radius:99px;transition:.3s}
+.row{display:flex;justify-content:space-between;gap:12px}
+.stat{font-size:14px;color:#6b7280}.stat strong{display:block;color:#111827;font-size:17px;margin-top:3px}
+.action{width:100%;border:0;border-radius:18px;padding:15px;background:#111827;color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-top:16px}
+.action:active{transform:scale(.99)}
+.history{margin-top:8px}
+.item{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eef0f3;font-size:14px}
+.item:last-child{border-bottom:0}
+.empty{color:#9ca3af;text-align:center;padding:12px}
+.reset{display:block;margin:18px auto 0;background:none;border:0;color:#9ca3af;font-size:12px}
+.modal{display:none;position:fixed;inset:0;background:#0007;align-items:flex-end;justify-content:center;padding:14px;z-index:10}
+.modal.show{display:flex}
+.sheet{width:min(620px,100%);background:#fff;border-radius:28px;padding:22px;box-shadow:0 -10px 40px #0003}
+.sheet h2{margin:0 0 5px;font-size:21px}.sheet p{margin:0 0 16px;color:#6b7280;font-size:14px}
+.input{width:100%;border:1px solid #d1d5db;border-radius:15px;padding:15px;font-size:18px;outline:none}
+.input:focus{border-color:#111827}
+.sheet-buttons{display:flex;gap:10px;margin-top:12px}.sheet-buttons button{flex:1;padding:14px;border-radius:15px;border:0;font-weight:700;font-size:15px}
+.cancel{background:#eef0f3;color:#374151}.save{background:#111827;color:white}
+@media(min-width:700px){.modal{align-items:center}.sheet{border-radius:28px}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
+  <section class="hero">
+    <div class="kicker">TABUNGAN</div>
+    <h1>TABUNGAN IPAD PRO</h1>
+    <p>💰 HARUS NABUNG, JANGAN TOP UP DULU!</p>
+  </section>
 
-  <div class="header">
-    <div class="small">TABUNGAN IMPIAN 📱</div>
-    <div class="title">iPad Pro M5 500GB</div>
-    <div class="subtitle">
-      Pelan-pelan yang penting konsisten 💰
-    </div>
-  </div>
-
-  <!-- TARGET HARGA -->
-  <div class="card">
-
+  <section class="card">
     <div class="label">Target harga</div>
-
-    <input
-      id="target"
-      type="number"
-      value="304800"
-      min="1"
-    >
-
-    <div
-      style="margin-top:14px"
-      class="label"
-    >
-      Tabungan saat ini
-    </div>
-
-    <div
-      class="big"
-      id="savedText"
-    >
-      ¥0
-    </div>
-
-    <div class="progress">
-      <div
-        class="bar"
-        id="bar"
-      ></div>
-    </div>
-
+    <button class="tap-value" id="targetBtn">¥304,800</button>
+    <div class="progress"><div class="bar" id="bar"></div></div>
     <div class="row">
-      <span id="percent">0%</span>
-
-      <span id="remaining">
-        Sisa ¥304,800
-      </span>
+      <div class="stat">Terkumpul<strong id="savedText">¥0</strong></div>
+      <div class="stat" style="text-align:right">Sisa<strong id="remainText">¥304,800</strong></div>
     </div>
+  </section>
 
-  </div>
+  <section class="card">
+    <div class="label">Target nabung per bulan</div>
+    <button class="tap-value" id="monthlyBtn">¥10,000</button>
+    <div class="stat" style="margin-top:8px">Estimasi waktu<strong id="monthsText">31 bulan</strong></div>
+    <button class="action" id="addBtn">＋ Tambah Tabungan</button>
+  </section>
 
-
-  <!-- TARGET NABUNG PER BULAN -->
-  <div class="card">
-
-    <div class="label">
-      Target nabung per bulan
-    </div>
-
-    <input
-      id="monthly"
-      type="number"
-      value="10000"
-      min="1"
-      step="1000"
-      placeholder="Contoh: 10000"
-    >
-
-    <div
-      class="small"
-      style="margin-top:8px"
-    >
-      Bisa diubah kapan saja untuk melihat
-      estimasi waktu.
-    </div>
-
-  </div>
-
-
-  <!-- INFO -->
-  <div class="grid">
-
-    <div class="stat">
-
-      <div class="label">
-        Nabung / bulan
-      </div>
-
-      <b id="monthlyText">
-        ¥10,000
-      </b>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="label">
-        Estimasi waktu
-      </div>
-
-      <b id="months">
-        31 bulan
-      </b>
-
-    </div>
-
-  </div>
-
-
-  <!-- TAMBAH TABUNGAN -->
-  <div class="card">
-
-    <div class="label">
-      Tambah tabungan
-    </div>
-
-    <input
-      id="amount"
-      type="number"
-      placeholder="Contoh: 10000"
-      min="1"
-    >
-
-    <button onclick="addSaving()">
-      ＋ Tambah Tabungan
-    </button>
-
-    <button
-      class="secondary"
-      onclick="resetAll()"
-    >
-      Reset Tabungan
-    </button>
-
-  </div>
-
-
-  <!-- RIWAYAT -->
-  <div class="card">
-
-    <div class="row">
-
-      <strong>
-        Riwayat Tabungan
-      </strong>
-
-      <span
-        class="small"
-        id="count"
-      >
-        0 transaksi
-      </span>
-
-    </div>
-
-    <div
-      id="history"
-      class="history"
-    ></div>
-
-    <div
-      id="success"
-      class="success"
-    >
-      🎉 Target M5 sudah tercapai, mun!
-    </div>
-
-  </div>
-
-
-  <div class="footer">
-    M5 Saving Tracker • Data tersimpan otomatis di perangkat
-  </div>
-
+  <section class="card">
+    <div class="label">Riwayat tabungan</div>
+    <div class="history" id="history"></div>
+  </section>
+  <button class="reset" id="resetBtn">Reset semua data</button>
 </div>
 
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h2 id="modalTitle">Ubah nominal</h2>
+    <p id="modalDesc">Masukkan nominal baru.</p>
+    <input class="input" id="amountInput" type="number" inputmode="numeric" min="0" placeholder="Contoh: 10000">
+    <div class="sheet-buttons">
+      <button class="cancel" id="cancelBtn">Batal</button>
+      <button class="save" id="saveBtn">Simpan</button>
+    </div>
+  </div>
+</div>
 
 <script>
+const fmt=n=>"¥"+Number(n||0).toLocaleString("ja-JP");
+let target=Number(localStorage.getItem("m5_target")||304800);
+let monthly=Number(localStorage.getItem("m5_monthly")||10000);
+let saved=Number(localStorage.getItem("m5_saved")||0);
+let history=JSON.parse(localStorage.getItem("m5_history")||"[]");
+let mode="";
 
-let saved =
-  Number(
-    localStorage.getItem("m5_saved") || 0
-  );
-
-let history =
-  JSON.parse(
-    localStorage.getItem("m5_history") || "[]"
-  );
-
-
-const yen = n =>
-  "¥" +
-  Math.round(n).toLocaleString("ja-JP");
-
-
+const $=id=>document.getElementById(id);
 function render(){
-
-  const target =
-    Math.max(
-      1,
-      Number(
-        document.getElementById("target").value ||
-        304800
-      )
-    );
-
-
-  localStorage.setItem(
-    "m5_target",
-    target
-  );
-
-
-  const pct =
-    Math.min(
-      100,
-      saved / target * 100
-    );
-
-
-  const remain =
-    Math.max(
-      0,
-      target - saved
-    );
-
-
-  const monthly =
-    Math.max(
-      1,
-      Number(
-        document.getElementById("monthly").value ||
-        10000
-      )
-    );
-
-
-  localStorage.setItem(
-    "m5_monthly",
-    monthly
-  );
-
-
-  const months =
-    Math.ceil(
-      remain / monthly
-    );
-
-
-  document.getElementById(
-    "monthlyText"
-  ).textContent =
-    yen(monthly);
-
-
-  document.getElementById(
-    "savedText"
-  ).textContent =
-    yen(saved);
-
-
-  document.getElementById(
-    "bar"
-  ).style.width =
-    pct + "%";
-
-
-  document.getElementById(
-    "percent"
-  ).textContent =
-    pct.toFixed(1) + "%";
-
-
-  document.getElementById(
-    "remaining"
-  ).textContent =
-    remain
-      ? "Sisa " + yen(remain)
-      : "TARGET TERCAPAI 🎉";
-
-
-  document.getElementById(
-    "months"
-  ).textContent =
-    remain
-      ? months + " bulan"
-      : "Sudah tercapai!";
-
-
-  document.getElementById(
-    "count"
-  ).textContent =
-    history.length +
-    " transaksi";
-
-
-  const box =
-    document.getElementById(
-      "history"
-    );
-
-
-  box.innerHTML =
-    history.length
-
-      ? history
-          .slice()
-          .reverse()
-          .map(x =>
-
-            `<div class="item">
-              <span>${x.date}</span>
-              <b>+${yen(x.amount)}</b>
-            </div>`
-
-          )
-          .join("")
+  $("targetBtn").textContent=fmt(target);
+  $("monthlyBtn").textContent=fmt(monthly);
+  $("savedText").textContent=fmt(saved);
+  const remain=Math.max(target-saved,0);
+  $("remainText").textContent=fmt(remain);
+  $("bar").style.width=Math.min(saved/target*100,100)+"%";
+  $("monthsText").textContent=remain===0?"Target tercapai 🎉":(monthly>0?Math.ceil(remain/monthly)+" bulan":"—");
+  $("history").innerHTML=history.length?history.slice().reverse().map(x=>`<div class="item"><span>${x.date}</span><strong>+${fmt(x.amount)}</strong></div>`).join(""):'<div class="empty">Belum ada tabungan.</div>';
+}
+function openModal(m){
+  mode=m;
+  $("modal").classList.add("show");
+  if(m==="target"){ $("modalTitle").textContent="Ubah target harga"; $("modalDesc").textContent="Tentukan sendiri harga iPad Pro M5."; $("amountInput").value=target; }
+  else if(m==="monthly"){ $("modalTitle").textContent="Ubah target bulanan"; $("modalDesc").textContent="Tentukan sendiri jumlah yang ingin ditabung tiap bulan."; $("amountInput").value=monthly; }
+  else { $("modalTitle").textContent="Tambah tabungan"; $("modalDesc").textContent="Masukkan jumlah yang baru kamu tabung."; $("amountInput").value=""; }
+  setTimeout(()=>$("amountInput").focus(),80);
+}
+function closeModal(){ $("modal").classList.remove("show"); mode=""; }
+$("targetBtn").onclick=()=>openModal("target");
+$("monthlyBtn").onclick=()=>openModal("monthly");
+$("addBtn").onclick=()=>openModal("add");
+$("cancelBtn").onclick=closeModal;
+$("modal").onclick=e=>{if(e.target.id==="modal")closeModal()};
+$("saveBtn").onclick=()=>{
+  const n=Math.floor(Number($("amountInput").value));
+  if(!Number.isFinite(n)||n<=0)return;
+  if(mode==="target"){target=n;localStorage.setItem("m5_target",target)}
+  if(mode==="monthly"){monthly=n;localStorage.setItem("m5_monthly",monthly)}
+  if(mode==="add"){
+    saved+=n; localStorage.setItem("m5_saved",saved);
+    history.push({amount:n,date:new Date().toLocaleDateString("ja-JP")});
+    localStorage.setItem("m5_history",JSON.stringify(history));
+  }
+  closeModal();render();
+};
+$("resetBtn").onclick=()=>{
+  if(confirm("Hapus semua data tabungan?")){
+    localStorage.removeItem("m5_target");localStorage.removeItem("m5_monthly");localStorage.removeItem("m5_saved");localStorage.removeItem("m5_history");
+    target=304800;monthly=10000;saved=0;history=[];render();
+  }
+};
+$("amountInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("saveBtn").click()});
+render();
+</script>
+</body>
+</html>
