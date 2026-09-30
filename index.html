@@ -4,126 +4,491 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>M5 Saving Tracker</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;background:#f2f2f7;color:#111}
-.app{max-width:520px;margin:auto;min-height:100vh;padding:22px 16px 40px}
-.header{background:linear-gradient(135deg,#111,#3a3a3c);color:white;border-radius:28px;padding:26px 22px;margin-bottom:16px;box-shadow:0 12px 30px #0002}
-.small{font-size:13px;opacity:.7}.title{font-size:27px;font-weight:800;margin:6px 0}
-.subtitle{opacity:.75;font-size:14px}
-.card{background:white;border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 5px 18px #0000000d}
-.label{font-size:13px;color:#777;margin-bottom:6px}
-.big{font-size:30px;font-weight:800}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.progress{height:14px;background:#e5e5ea;border-radius:99px;overflow:hidden;margin:15px 0 8px}
-.bar{height:100%;width:0;background:#111;border-radius:99px;transition:.4s}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat{background:#f7f7f8;border-radius:16px;padding:14px}
-.stat b{font-size:18px;display:block;margin-top:4px}
-input{width:100%;padding:14px;border:1px solid #ddd;border-radius:14px;font-size:16px;background:#fafafa;outline:none}
-button{width:100%;border:0;border-radius:15px;padding:14px;font-size:16px;font-weight:700;background:#111;color:white;margin-top:10px}
-button.secondary{background:#eee;color:#111}
-.history{margin-top:12px}
-.item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;font-size:14px}
-.item:last-child{border-bottom:0}
-.success{background:#e8f7ed;color:#16743b;border-radius:14px;padding:13px;margin-top:12px;font-size:14px;display:none}
-.footer{text-align:center;color:#999;font-size:12px;margin-top:22px}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+  "Helvetica Neue",Arial,sans-serif;
+  background:#f2f2f7;
+  color:#111;
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  padding:22px 16px 40px;
+}
+
+.header{
+  background:linear-gradient(135deg,#111,#3a3a3c);
+  color:white;
+  border-radius:28px;
+  padding:26px 22px;
+  margin-bottom:16px;
+  box-shadow:0 12px 30px #0002;
+}
+
+.small{
+  font-size:13px;
+  opacity:.7
+}
+
+.title{
+  font-size:27px;
+  font-weight:800;
+  margin:6px 0
+}
+
+.subtitle{
+  opacity:.75;
+  font-size:14px
+}
+
+.card{
+  background:white;
+  border-radius:22px;
+  padding:20px;
+  margin:14px 0;
+  box-shadow:0 5px 18px #0000000d
+}
+
+.label{
+  font-size:13px;
+  color:#777;
+  margin-bottom:6px
+}
+
+.big{
+  font-size:30px;
+  font-weight:800
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center
+}
+
+.progress{
+  height:14px;
+  background:#e5e5ea;
+  border-radius:99px;
+  overflow:hidden;
+  margin:15px 0 8px
+}
+
+.bar{
+  height:100%;
+  width:0;
+  background:#111;
+  border-radius:99px;
+  transition:.4s
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+
+.stat{
+  background:#f7f7f8;
+  border-radius:16px;
+  padding:14px
+}
+
+.stat b{
+  font-size:18px;
+  display:block;
+  margin-top:4px
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:14px;
+  font-size:16px;
+  background:#fafafa;
+  outline:none
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:14px;
+  font-size:16px;
+  font-weight:700;
+  background:#111;
+  color:white;
+  margin-top:10px
+}
+
+button.secondary{
+  background:#eee;
+  color:#111
+}
+
+.history{
+  margin-top:12px
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+  font-size:14px
+}
+
+.item:last-child{
+  border-bottom:0
+}
+
+.success{
+  background:#e8f7ed;
+  color:#16743b;
+  border-radius:14px;
+  padding:13px;
+  margin-top:12px;
+  font-size:14px;
+  display:none
+}
+
+.footer{
+  text-align:center;
+  color:#999;
+  font-size:12px;
+  margin-top:22px
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
+
   <div class="header">
     <div class="small">TABUNGAN IMPIAN 📱</div>
     <div class="title">iPad Pro M5 500GB</div>
-    <div class="subtitle">Pelan-pelan yang penting konsisten 💰</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Target harga</div>
-    <input id="target" type="number" value="304800" min="1">
-    <div style="margin-top:14px" class="label">Tabungan saat ini</div>
-    <div class="big" id="savedText">¥0</div>
-    <div class="progress"><div class="bar" id="bar"></div></div>
-    <div class="row"><span id="percent">0%</span><span id="remaining">Sisa ¥180,000</span></div>
-  </div>
-
-  <div class="grid">
-    <div class="stat"><div class="label">Nabung / bulan</div><b>¥10,000</b></div>
-    <div class="stat"><div class="label">Estimasi waktu</div><b id="months">18 bulan</b></div>
-  </div>
-
-  <div class="card">
-    <div class="label">Tambah tabungan</div>
-    <input id="amount" type="number" placeholder="Contoh: 10000" min="1">
-    <button onclick="addSaving()">＋ Tambah Tabungan</button>
-    <button class="secondary" onclick="resetAll()">Reset Tabungan</button>
-  </div>
-
-  <div class="card">
-    <div class="row">
-      <strong>Riwayat Tabungan</strong>
-      <span class="small" id="count">0 transaksi</span>
+    <div class="subtitle">
+      Pelan-pelan yang penting konsisten 💰
     </div>
-    <div id="history" class="history"></div>
-    <div id="success" class="success">🎉 Target M5 sudah tercapai, mun!</div>
   </div>
 
-  <div class="footer">M5 Saving Tracker • Data tersimpan otomatis di perangkat</div>
+  <!-- TARGET HARGA -->
+  <div class="card">
+
+    <div class="label">Target harga</div>
+
+    <input
+      id="target"
+      type="number"
+      value="304800"
+      min="1"
+    >
+
+    <div
+      style="margin-top:14px"
+      class="label"
+    >
+      Tabungan saat ini
+    </div>
+
+    <div
+      class="big"
+      id="savedText"
+    >
+      ¥0
+    </div>
+
+    <div class="progress">
+      <div
+        class="bar"
+        id="bar"
+      ></div>
+    </div>
+
+    <div class="row">
+      <span id="percent">0%</span>
+
+      <span id="remaining">
+        Sisa ¥304,800
+      </span>
+    </div>
+
+  </div>
+
+
+  <!-- TARGET NABUNG PER BULAN -->
+  <div class="card">
+
+    <div class="label">
+      Target nabung per bulan
+    </div>
+
+    <input
+      id="monthly"
+      type="number"
+      value="10000"
+      min="1"
+      step="1000"
+      placeholder="Contoh: 10000"
+    >
+
+    <div
+      class="small"
+      style="margin-top:8px"
+    >
+      Bisa diubah kapan saja untuk melihat
+      estimasi waktu.
+    </div>
+
+  </div>
+
+
+  <!-- INFO -->
+  <div class="grid">
+
+    <div class="stat">
+
+      <div class="label">
+        Nabung / bulan
+      </div>
+
+      <b id="monthlyText">
+        ¥10,000
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="label">
+        Estimasi waktu
+      </div>
+
+      <b id="months">
+        31 bulan
+      </b>
+
+    </div>
+
+  </div>
+
+
+  <!-- TAMBAH TABUNGAN -->
+  <div class="card">
+
+    <div class="label">
+      Tambah tabungan
+    </div>
+
+    <input
+      id="amount"
+      type="number"
+      placeholder="Contoh: 10000"
+      min="1"
+    >
+
+    <button onclick="addSaving()">
+      ＋ Tambah Tabungan
+    </button>
+
+    <button
+      class="secondary"
+      onclick="resetAll()"
+    >
+      Reset Tabungan
+    </button>
+
+  </div>
+
+
+  <!-- RIWAYAT -->
+  <div class="card">
+
+    <div class="row">
+
+      <strong>
+        Riwayat Tabungan
+      </strong>
+
+      <span
+        class="small"
+        id="count"
+      >
+        0 transaksi
+      </span>
+
+    </div>
+
+    <div
+      id="history"
+      class="history"
+    ></div>
+
+    <div
+      id="success"
+      class="success"
+    >
+      🎉 Target M5 sudah tercapai, mun!
+    </div>
+
+  </div>
+
+
+  <div class="footer">
+    M5 Saving Tracker • Data tersimpan otomatis di perangkat
+  </div>
+
 </div>
 
-<script>
-let saved = Number(localStorage.getItem("m5_saved") || 0);
-let history = JSON.parse(localStorage.getItem("m5_history") || "[]");
 
-const yen = n => "¥" + Math.round(n).toLocaleString("ja-JP");
+<script>
+
+let saved =
+  Number(
+    localStorage.getItem("m5_saved") || 0
+  );
+
+let history =
+  JSON.parse(
+    localStorage.getItem("m5_history") || "[]"
+  );
+
+
+const yen = n =>
+  "¥" +
+  Math.round(n).toLocaleString("ja-JP");
+
 
 function render(){
-  const target = Math.max(1, Number(document.getElementById("target").value || 304800));
-  localStorage.setItem("m5_target", target);
 
-  const pct = Math.min(100, saved / target * 100);
-  const remain = Math.max(0, target - saved);
-  const months = Math.ceil(remain / 10000);
+  const target =
+    Math.max(
+      1,
+      Number(
+        document.getElementById("target").value ||
+        304800
+      )
+    );
 
-  document.getElementById("savedText").textContent = yen(saved);
-  document.getElementById("bar").style.width = pct + "%";
-  document.getElementById("percent").textContent = pct.toFixed(1) + "%";
-  document.getElementById("remaining").textContent = remain ? "Sisa " + yen(remain) : "TARGET TERCAPAI 🎉";
-  document.getElementById("months").textContent = remain ? months + " bulan" : "Sudah tercapai!";
-  document.getElementById("count").textContent = history.length + " transaksi";
 
-  const box = document.getElementById("history");
-  box.innerHTML = history.length ? history.slice().reverse().map(x =>
-    `<div class="item"><span>${x.date}</span><b>+${yen(x.amount)}</b></div>`
-  ).join("") : '<div class="small" style="padding-top:14px">Belum ada transaksi.</div>';
+  localStorage.setItem(
+    "m5_target",
+    target
+  );
 
-  document.getElementById("success").style.display = saved >= target ? "block" : "none";
-}
 
-function addSaving(){
-  const input = document.getElementById("amount");
-  const amount = Number(input.value);
-  if(!amount || amount <= 0) return alert("Masukkan nominal tabungan dulu mun 😆");
-  saved += amount;
-  history.push({amount, date:new Date().toLocaleDateString("id-ID",{day:"2-digit",month:"2-digit",year:"numeric"})});
-  localStorage.setItem("m5_saved", saved);
-  localStorage.setItem("m5_history", JSON.stringify(history));
-  input.value = "";
-  render();
-}
+  const pct =
+    Math.min(
+      100,
+      saved / target * 100
+    );
 
-function resetAll(){
-  if(confirm("Yakin reset semua tabungan M5?")){
-    saved = 0; history = [];
-    localStorage.removeItem("m5_saved");
-    localStorage.removeItem("m5_history");
-    render();
-  }
-}
 
-document.getElementById("target").value = Number(localStorage.getItem("m5_target") || 304800);
-document.getElementById("target").addEventListener("input", render);
-render();
-</script>
-</body>
-</html>
+  const remain =
+    Math.max(
+      0,
+      target - saved
+    );
+
+
+  const monthly =
+    Math.max(
+      1,
+      Number(
+        document.getElementById("monthly").value ||
+        10000
+      )
+    );
+
+
+  localStorage.setItem(
+    "m5_monthly",
+    monthly
+  );
+
+
+  const months =
+    Math.ceil(
+      remain / monthly
+    );
+
+
+  document.getElementById(
+    "monthlyText"
+  ).textContent =
+    yen(monthly);
+
+
+  document.getElementById(
+    "savedText"
+  ).textContent =
+    yen(saved);
+
+
+  document.getElementById(
+    "bar"
+  ).style.width =
+    pct + "%";
+
+
+  document.getElementById(
+    "percent"
+  ).textContent =
+    pct.toFixed(1) + "%";
+
+
+  document.getElementById(
+    "remaining"
+  ).textContent =
+    remain
+      ? "Sisa " + yen(remain)
+      : "TARGET TERCAPAI 🎉";
+
+
+  document.getElementById(
+    "months"
+  ).textContent =
+    remain
+      ? months + " bulan"
+      : "Sudah tercapai!";
+
+
+  document.getElementById(
+    "count"
+  ).textContent =
+    history.length +
+    " transaksi";
+
+
+  const box =
+    document.getElementById(
+      "history"
+    );
+
+
+  box.innerHTML =
+    history.length
+
+      ? history
+          .slice()
+          .reverse()
+          .map(x =>
+
+            `<div class="item">
+              <span>${x.date}</span>
+              <b>+${yen(x.amount)}</b>
+            </div>`
+
+          )
+          .join("")
